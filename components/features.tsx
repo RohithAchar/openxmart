@@ -15,7 +15,7 @@ const links = [
   {
     name: "Explore",
     icon: <Telescope className="w-4 h-4 sm:w-6 sm:h-6" />,
-    path: "/your-path",
+    path: "/explore",
   },
   {
     name: "Account",
