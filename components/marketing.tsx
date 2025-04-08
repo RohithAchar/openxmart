@@ -46,7 +46,7 @@ const marketingData = [
 
 const Marketing = () => {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 py-8 gap-4 gap-y-8 rounded-2xl bg-primary text-primary-foreground">
+    <div className="grid grid-cols-2 md:grid-cols-4 py-8 gap-4 gap-y-8 rounded-2xl bg-primary text-primary-foreground px-4">
       {marketingData.map((item, idx) => (
         <div
           key={idx}
