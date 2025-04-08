@@ -18,9 +18,9 @@ const links = [
     path: "/your-path",
   },
   {
-    name: "Selected",
+    name: "Account",
     icon: <MousePointer2 className="w-4 h-4 sm:w-6 sm:h-6" />,
-    path: "/your-path",
+    path: "/account",
   },
 ];
 

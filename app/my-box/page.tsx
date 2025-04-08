@@ -27,6 +27,7 @@ import {
 import { Heart, Package, ShoppingCart, Star, Truck } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import BackBtn from "@/components/back-btn";
 
 // Mock data for orders
 const orders = [
@@ -166,6 +167,7 @@ const MyBoxPage = () => {
 
   return (
     <div className="container mx-auto py-8 px-4">
+      <BackBtn />
       <h1 className="text-3xl font-bold mb-8">My Orders & Favorites</h1>
 
       <Tabs defaultValue="orders" className="w-full">

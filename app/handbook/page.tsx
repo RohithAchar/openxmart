@@ -17,6 +17,7 @@ import {
   MessageCircle,
   Shield,
 } from "lucide-react";
+import BackBtn from "@/components/back-btn";
 
 export default function Home() {
   const sections = [
@@ -165,6 +166,7 @@ export default function Home() {
 
   return (
     <div className="container mx-auto py-8 px-4">
+      <BackBtn />
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
           <h1 className="text-3xl font-bold">User Handbook</h1>
