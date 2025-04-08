@@ -29,7 +29,7 @@ const Features = () => {
     <div className="grid grid-cols-4 gap-2">
       {links.map((link, idx) => (
         <Link key={idx} href={link.path}>
-          <div className="bg-accent sm:opacity-80 sm:hover:opacity-100 text-accent-foreground text-xs sm:text-base px-3 sm:px-6 lg:px-8 py-4 rounded-xl flex items-center justify-between">
+          <div className="bg-accent sm:opacity-80 sm:hover:opacity-100 text-accent-foreground text-xs sm:text-base px-2 sm:px-6 lg:px-8 py-4 rounded-xl flex items-center justify-between">
             <p className="underline">{link.name}</p>
             {link.icon}
           </div>
