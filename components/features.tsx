@@ -5,7 +5,7 @@ const links = [
   {
     name: "My Box",
     icon: <Package className="w-4 h-4 sm:w-6 sm:h-6" />,
-    path: "/your-path",
+    path: "/my-box",
   },
   {
     name: "Handbook",
