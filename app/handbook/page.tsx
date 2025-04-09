@@ -1,7 +1,6 @@
 "use client";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,
@@ -33,7 +32,7 @@ export default function Home() {
           <ol className="space-y-4">
             <li className="flex gap-2">
               <span className="font-semibold">1.</span>
-              Click the "Sign Up" button in the top right corner
+              Click the &quot;Sign Up&quot; button in the top right corner
             </li>
             <li className="flex gap-2">
               <span className="font-semibold">2.</span>
@@ -94,7 +93,7 @@ export default function Home() {
             <ol className="space-y-2">
               <li className="flex gap-2">
                 <span className="font-semibold">1.</span>
-                Select "Request Sample" on the product page
+                Select &quot;Request Sample&quot; on the product page
               </li>
               <li className="flex gap-2">
                 <span className="font-semibold">2.</span>

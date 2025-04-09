@@ -3,7 +3,6 @@ import BackBtn from "@/components/back-btn";
 import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
-  Flag,
   Heart,
   HelpCircle,
   LogOut,
