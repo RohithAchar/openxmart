@@ -1,6 +1,10 @@
 import Billboard from "@/components/billboard";
 import Features from "@/components/features";
+import HotSelling from "@/components/hot-selling";
 import Marketing from "@/components/marketing";
+import NewArrivals from "@/components/new-arrivals";
+import PremiumSuppliers from "@/components/premium-suppliers";
+import YourSelected from "@/components/your-selected";
 
 export default function Home() {
   return (
@@ -8,6 +12,10 @@ export default function Home() {
       <Billboard />
       <Features />
       <Marketing />
+      <HotSelling />
+      <YourSelected />
+      <NewArrivals />
+      <PremiumSuppliers />
     </div>
   );
 }
