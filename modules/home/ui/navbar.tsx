@@ -3,10 +3,16 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["700"],
+});
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 import { NavbarSidebar } from "./navbar-sidebar";
+import { Poppins } from "next/font/google";
 
 export const navbarItems = [
   {
@@ -37,7 +43,14 @@ export const Navbar = () => {
   return (
     <nav className="h-16 border-b flex items-center justify-between lg:px-12 px-4">
       <Link href="/">
-        <h1 className="text-2xl font-semibold text-primary">openxmart</h1>
+        <h1
+          className={cn(
+            "text-2xl font-semibold text-primary",
+            poppins.className
+          )}
+        >
+          openxmart
+        </h1>
       </Link>
       <div className="hidden lg:flex items-center gap-4">
         {navbarItems.map((item) => (

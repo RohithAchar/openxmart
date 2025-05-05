@@ -1,5 +1,7 @@
-const SignUpPage = () => {
-  return <div>SignUp</div>;
+import SignUp from "@/modules/auth/view/sign-up";
+
+const SignUpPage = async () => {
+  return <SignUp />;
 };
 
 export default SignUpPage;

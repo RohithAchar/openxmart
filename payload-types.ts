@@ -13,8 +13,8 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
-    'payload-preferences': PayloadPreference;
-    'payload-migrations': PayloadMigration;
+    "payload-preferences": PayloadPreference;
+    "payload-migrations": PayloadMigration;
   };
   db: {
     defaultIDType: string;
@@ -22,7 +22,7 @@ export interface Config {
   globals: {};
   locale: null;
   user: User & {
-    collection: 'users';
+    collection: "users";
   };
 }
 export interface UserAuthOperations {
@@ -52,6 +52,7 @@ export interface User {
   updatedAt: string;
   createdAt: string;
   email: string;
+  username: string;
   resetPasswordToken?: string | null;
   resetPasswordExpiration?: string | null;
   salt?: string | null;
@@ -86,7 +87,7 @@ export interface Media {
 export interface PayloadPreference {
   id: string;
   user: {
-    relationTo: 'users';
+    relationTo: "users";
     value: string | User;
   };
   key?: string | null;
@@ -121,7 +122,6 @@ export interface Auth {
   [k: string]: unknown;
 }
 
-
-declare module 'payload' {
+declare module "payload" {
   export interface GeneratedTypes extends Config {}
 }
