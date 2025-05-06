@@ -9,6 +9,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { useTRPC } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -24,6 +26,9 @@ interface Props {
 
 export const NavbarSidebar = ({ items }: Props) => {
   const pathname = usePathname();
+
+  const trpc = useTRPC();
+  const session = useQuery(trpc.auth.session.queryOptions());
 
   return (
     <div className="lg:hidden flex">
@@ -48,8 +53,15 @@ export const NavbarSidebar = ({ items }: Props) => {
                 </Link>
               ))}
               <div className="flex flex-col gap-2 pt-8 border-t">
-                <Link href="/sign-up">Sign up</Link>
-                <Link href="login">Login</Link>
+                {session.data?.user ? (
+                  <Link href="/admin">Dashboard</Link>
+                ) : (
+                  <>
+                    {" "}
+                    <Link href="/sign-up">Sign up</Link>
+                    <Link href="login">Login</Link>
+                  </>
+                )}
               </div>
             </SheetDescription>
           </SheetHeader>

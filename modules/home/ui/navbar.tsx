@@ -13,6 +13,8 @@ import { Button } from "@/components/ui/button";
 
 import { NavbarSidebar } from "./navbar-sidebar";
 import { Poppins } from "next/font/google";
+import { useTRPC } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
 
 export const navbarItems = [
   {
@@ -39,6 +41,9 @@ export const navbarItems = [
 
 export const Navbar = () => {
   const pathname = usePathname();
+
+  const trpc = useTRPC();
+  const session = useQuery(trpc.auth.session.queryOptions());
 
   return (
     <nav className="h-16 border-b flex items-center justify-between lg:px-12 px-4">
@@ -67,12 +72,20 @@ export const Navbar = () => {
         ))}
       </div>
       <div className="hidden lg:flex items-center gap-4">
-        <Link href="/sign-up">
-          <Button variant="outline">Sign Up</Button>
-        </Link>
-        <Link href="login">
-          <Button>Login</Button>
-        </Link>
+        {session.data?.user ? (
+          <Link href="/admin">
+            <Button>Dashboard</Button>
+          </Link>
+        ) : (
+          <>
+            <Link href="/sign-up">
+              <Button variant="outline">Sign Up</Button>
+            </Link>
+            <Link href="login">
+              <Button>Login</Button>
+            </Link>
+          </>
+        )}
       </div>
 
       <NavbarSidebar items={navbarItems} />

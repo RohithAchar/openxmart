@@ -1,7 +1,9 @@
-import { getQueryClient, trpc } from "@/trpc/server";
+import { Billboard } from "@/modules/home/ui/billboard";
 
 export default async function Home() {
-  const queryClient = getQueryClient();
-  const user = await queryClient.fetchQuery(trpc.auth.session.queryOptions());
-  return <div>USER: {JSON.stringify(user.user)}</div>;
+  return (
+    <div className="px-4 lg:px-12 py-2 lg:py-8">
+      <Billboard />
+    </div>
+  );
 }

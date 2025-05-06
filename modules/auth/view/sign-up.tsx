@@ -30,6 +30,8 @@ const poppins = Poppins({
   weight: ["700"],
 });
 
+export const dynamic = "force-dynamic";
+
 const SignUp = () => {
   const trpc = useTRPC();
   const router = useRouter();

@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,7 +21,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 
-import { registerSchema } from "../schemas";
+import { loginSchema } from "../schemas";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const poppins = Poppins({
@@ -30,41 +29,35 @@ const poppins = Poppins({
   weight: ["700"],
 });
 
-const SignUp = () => {
+const SignIn = () => {
   const trpc = useTRPC();
   const router = useRouter();
   const queryClient = useQueryClient();
-  const register = useMutation(
-    trpc.auth.register.mutationOptions({
+  const login = useMutation(
+    trpc.auth.login.mutationOptions({
       onError: (err) => {
         toast.error(err.message);
       },
       onSuccess: async () => {
-        toast.success("Account created successfully");
+        toast.success("Login successfully");
         await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
         router.push("/");
       },
     })
   );
 
-  const form = useForm<z.infer<typeof registerSchema>>({
+  const form = useForm<z.infer<typeof loginSchema>>({
     mode: "all",
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
-      username: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof registerSchema>) => {
-    register.mutate(values);
+  const onSubmit = (values: z.infer<typeof loginSchema>) => {
+    login.mutate(values);
   };
-
-  const username = form.watch("username");
-  const usernameErrors = form.formState.errors.username;
-
-  const showPreview = username && !usernameErrors;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-5">
@@ -120,7 +113,7 @@ const SignUp = () => {
                 </FormItem>
               )}
             />
-            <Button disabled={register.isPending} size="lg" type="submit">
+            <Button disabled={login.isPending} size="lg" type="submit">
               Login
             </Button>
           </form>
@@ -138,4 +131,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;
