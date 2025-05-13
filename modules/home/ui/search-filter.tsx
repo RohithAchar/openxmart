@@ -129,7 +129,7 @@ const SearchFilter = () => {
         <Input className="bg-white" placeholder="search products" />
         <div className="lg:hidden">
           <Sheet>
-            <SheetTrigger>
+            <SheetTrigger asChild>
               <Button variant="outline">
                 <Menu />
               </Button>

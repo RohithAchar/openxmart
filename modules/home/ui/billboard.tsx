@@ -11,7 +11,7 @@ export const Billboard = () => {
     return <BillboardSkeleton />;
   }
 
-  if (billboard.data?.image.url) {
+  if (billboard.data?.image?.url) {
     return (
       <div
         className="w-full aspect-square lg:aspect-[16/5] border flex items-center justify-center"
