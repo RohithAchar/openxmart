@@ -1,5 +1,6 @@
 "use client";
-
+import { Poppins } from "next/font/google";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -12,9 +13,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 import { NavbarSidebar } from "./navbar-sidebar";
-import { Poppins } from "next/font/google";
 import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
 
 export const navbarItems = [
   {
@@ -46,7 +45,7 @@ export const Navbar = () => {
   const session = useQuery(trpc.auth.session.queryOptions());
 
   return (
-    <nav className="h-16 border-b flex items-center justify-between lg:px-12 px-4">
+    <nav className="h-16 flex items-center justify-between lg:px-12 px-4">
       <Link href="/">
         <h1
           className={cn(

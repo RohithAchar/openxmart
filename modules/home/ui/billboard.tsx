@@ -14,7 +14,7 @@ export const Billboard = () => {
   if (billboard.data?.image.url) {
     return (
       <div
-        className="w-full aspect-square lg:aspect-[16/5] border rounded-lg flex items-center justify-center"
+        className="w-full aspect-square lg:aspect-[16/5] border flex items-center justify-center"
         style={{
           backgroundImage: `url(${billboard.data.image.url})`,
           backgroundSize: "cover",
@@ -32,7 +32,7 @@ export const Billboard = () => {
 const BillboardSkeleton = () => {
   return (
     <div className="w-full aspect-square lg:aspect-[16/5]">
-      <div className="h-full bg-muted-foreground animate-pulse rounded-lg"></div>
+      <div className="h-full bg-muted-foreground animate-pulse"></div>
     </div>
   );
 };
