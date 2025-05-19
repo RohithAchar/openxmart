@@ -23,7 +23,9 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 const SearchFilter = () => {
   const pathname = usePathname();
   const trpc = useTRPC();
-  const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
+  const { data, isLoading } = useSuspenseQuery(
+    trpc.categories.getMany.queryOptions()
+  );
 
   return (
     <div className="w-full px-2 py-4 lg:py-6 lg:px-12 bg-primary-foreground lg:space-y-4">
@@ -63,23 +65,28 @@ const SearchFilter = () => {
           </Sheet>
         </div>
       </div>
-      <div className="hidden lg:flex items-center gap-2">
-        <CategoryPill
-          key="all"
-          name="All"
-          slug="/"
-          isActive={pathname === "/"}
-        />
-        {data?.map((category) => (
+      {isLoading ? (
+        // TODO: loading state
+        <div className="">Loading...</div>
+      ) : (
+        <div className="hidden lg:flex items-center gap-2">
           <CategoryPill
-            key={category.slug}
-            name={category.name}
-            slug={category.slug}
-            isActive={pathname === category.slug}
-            subcategories={category.subcategories}
+            key="all"
+            name="All"
+            slug="/"
+            isActive={pathname === "/"}
           />
-        ))}
-      </div>
+          {data?.map((category) => (
+            <CategoryPill
+              key={category.slug}
+              name={category.name}
+              slug={category.slug}
+              isActive={pathname === category.slug}
+              subcategories={category.subcategories}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
