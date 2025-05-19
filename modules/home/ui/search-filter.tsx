@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -13,115 +14,16 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
+import { useTRPC } from "@/trpc/client";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { ChevronRight, Menu } from "lucide-react";
-
-const categories = [
-  {
-    name: "Office Supplies",
-    slug: "office-supplies",
-    subcategories: [
-      { name: "Stationery", slug: "stationery" },
-      { name: "Printers & Ink", slug: "printers-ink" },
-      { name: "Office Furniture", slug: "office-furniture" },
-      { name: "Storage & Organization", slug: "storage-organization" },
-    ],
-  },
-  {
-    name: "Industrial & Scientific",
-    slug: "industrial-scientific",
-    subcategories: [
-      { name: "Lab Equipment", slug: "lab-equipment" },
-      { name: "Safety Supplies", slug: "safety-supplies" },
-      { name: "Power Tools", slug: "power-tools" },
-      { name: "Measurement Instruments", slug: "measurement-instruments" },
-    ],
-  },
-  {
-    name: "Packaging & Shipping",
-    slug: "packaging-shipping",
-    subcategories: [
-      { name: "Boxes & Cartons", slug: "boxes-cartons" },
-      { name: "Tapes & Adhesives", slug: "tapes-adhesives" },
-      { name: "Labels & Tags", slug: "labels-tags" },
-      { name: "Shipping Bags", slug: "shipping-bags" },
-    ],
-  },
-  {
-    name: "Retail & POS",
-    slug: "retail-pos",
-    subcategories: [
-      { name: "POS Systems", slug: "pos-systems" },
-      { name: "Barcode Scanners", slug: "barcode-scanners" },
-      { name: "Receipt Printers", slug: "receipt-printers" },
-      { name: "Display Fixtures", slug: "display-fixtures" },
-    ],
-  },
-  {
-    name: "IT & Electronics",
-    slug: "it-electronics",
-    subcategories: [
-      { name: "Computers & Laptops", slug: "computers-laptops" },
-      { name: "Networking Equipment", slug: "networking-equipment" },
-      { name: "Monitors & Accessories", slug: "monitors-accessories" },
-      { name: "Data Storage", slug: "data-storage" },
-    ],
-  },
-  {
-    name: "Cleaning & Sanitation",
-    slug: "cleaning-sanitation",
-    subcategories: [
-      { name: "Cleaning Equipment", slug: "cleaning-equipment" },
-      { name: "Sanitizers & Disinfectants", slug: "sanitizers-disinfectants" },
-      { name: "Janitorial Supplies", slug: "janitorial-supplies" },
-      { name: "Waste Management", slug: "waste-management" },
-    ],
-  },
-  {
-    name: "Food & Catering",
-    slug: "food-catering",
-    subcategories: [
-      { name: "Bulk Groceries", slug: "bulk-groceries" },
-      { name: "Kitchen Equipment", slug: "kitchen-equipment" },
-      { name: "Catering Disposables", slug: "catering-disposables" },
-      { name: "Refrigeration", slug: "refrigeration" },
-    ],
-  },
-  {
-    name: "Construction & Hardware",
-    slug: "construction-hardware",
-    subcategories: [
-      { name: "Building Materials", slug: "building-materials" },
-      { name: "Hand Tools", slug: "hand-tools" },
-      { name: "Electrical Supplies", slug: "electrical-supplies" },
-      { name: "Plumbing", slug: "plumbing" },
-    ],
-  },
-  {
-    name: "Clothing & Workwear",
-    slug: "clothing-workwear",
-    subcategories: [
-      { name: "Uniforms", slug: "uniforms" },
-      { name: "Safety Wear", slug: "safety-wear" },
-      { name: "Footwear", slug: "footwear" },
-      { name: "Aprons & Gloves", slug: "aprons-gloves" },
-    ],
-  },
-  {
-    name: "Printing & Customization",
-    slug: "printing-customization",
-    subcategories: [
-      { name: "Business Cards", slug: "business-cards" },
-      { name: "Flyers & Brochures", slug: "flyers-brochures" },
-      { name: "Custom Merchandise", slug: "custom-merchandise" },
-      { name: "Signage & Banners", slug: "signage-banners" },
-    ],
-  },
-];
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 const SearchFilter = () => {
   const pathname = usePathname();
+  const trpc = useTRPC();
+  const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
 
   return (
     <div className="w-full px-2 py-4 lg:py-6 lg:px-12 bg-primary-foreground lg:space-y-4">
@@ -149,7 +51,7 @@ const SearchFilter = () => {
                 subcategories={[]}
                 isActive={pathname === "/"}
               />
-              {categories.map((category) => (
+              {data?.map((category) => (
                 <CategoryList
                   key={category.slug}
                   name={category.name}
@@ -168,12 +70,13 @@ const SearchFilter = () => {
           slug="/"
           isActive={pathname === "/"}
         />
-        {categories.map((category) => (
+        {data?.map((category) => (
           <CategoryPill
             key={category.slug}
             name={category.name}
             slug={category.slug}
             isActive={pathname === category.slug}
+            subcategories={category.subcategories}
           />
         ))}
       </div>
@@ -187,23 +90,47 @@ const CategoryPill = ({
   name,
   slug,
   isActive,
+  subcategories = [],
 }: {
   name: string;
   slug: string;
   isActive?: boolean;
+  subcategories?: { name: string; slug: string }[];
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <Link href={slug} className="cursor-pointer">
-      <Button
-        variant="ghost"
-        className={cn(
-          "rounded-full hover:bg-white",
-          isActive && "bg-primary text-primary-foreground"
-        )}
-      >
-        {name}
-      </Button>
-    </Link>
+    <div
+      className="relative hidden lg:block"
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+    >
+      <Link href={slug}>
+        <Button
+          variant="ghost"
+          className={cn(
+            "rounded-full hover:bg-white",
+            isActive && "bg-primary text-primary-foreground"
+          )}
+        >
+          {name}
+        </Button>
+      </Link>
+
+      {isOpen && subcategories.length > 0 && (
+        <div className="absolute left-0 top-full w-48 rounded-md shadow-lg bg-white border z-50">
+          {subcategories.map((subcategory) => (
+            <Link
+              key={subcategory.slug}
+              href={`${slug}/${subcategory.slug}`}
+              className="block px-4 py-2 text-sm text-muted-foreground hover:bg-muted"
+            >
+              {subcategory.name}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 
