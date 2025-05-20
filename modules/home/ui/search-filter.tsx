@@ -38,7 +38,7 @@ const SearchFilter = () => {
                 <Menu />
               </Button>
             </SheetTrigger>
-            <SheetContent className="text-muted-foreground">
+            <SheetContent side="left" className="text-muted-foreground">
               <SheetHeader>
                 <SheetTitle>Categories</SheetTitle>
                 <SheetDescription>
@@ -172,7 +172,7 @@ const CategoryList = ({
         <div className={cn(isActive && "text-black underline")}>{name}</div>
         <ChevronRight size="16px" />
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent side="left">
         <SheetHeader>
           <SheetTitle>Subcategory</SheetTitle>
           <SheetDescription>

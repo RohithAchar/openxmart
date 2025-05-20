@@ -36,7 +36,7 @@ export const NavbarSidebar = ({ items }: Props) => {
         <SheetTrigger>
           <Menu />
         </SheetTrigger>
-        <SheetContent>
+        <SheetContent side="left">
           <SheetHeader>
             <SheetTitle className="border-b pb-2">Menu</SheetTitle>
             <SheetDescription className="flex flex-col gap-2 text-xl pt-8 text-right">
